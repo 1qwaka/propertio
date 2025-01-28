@@ -8,8 +8,12 @@ use App\Domain\Property\IPropertyService;
 use App\Domain\Property\PropertiesPageDto;
 use App\Domain\Property\PropertyEntity;
 use App\Domain\Property\UpdatePropertyDto;
+use App\Exceptions\WithErrorCodeException;
+use App\Models\Agent;
 use App\Models\Property;
+use App\Persistence\Converters\DtoToModelConverter;
 use App\Persistence\Converters\PropertyConverter;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -68,18 +72,35 @@ class PropertyService implements IPropertyService
         );
     }
 
-    public function getSelf(GetPropertiesDto $data): array
-    {
-        // TODO: Implement getSelf() method.
-    }
-
     public function update(UpdatePropertyDto $data): PropertyEntity
     {
-        // TODO: Implement update() method.
+        $property = Property::find($data->id);
+        if (!$property) {
+            throw new WithErrorCodeException('Property not found', 404);
+        }
+
+        $agent = Agent::where('user_id', Auth::user()->id)->get()->first();
+        if ($agent->id != $property->agent_id) {
+            throw new WithErrorCodeException('You don\'t have access to edit this property', 403);
+        }
+
+        $property->update(DtoToModelConverter::toArray($data));
+        return PropertyConverter::toDomain($property);
     }
 
     public function delete(int|string $id): void
     {
-        // TODO: Implement delete() method.
+        $property = Property::find($id);
+
+        if (!$property) {
+            throw new WithErrorCodeException('Property not found', 404);
+        }
+
+        $agent = Agent::where('user_id', Auth::user()->id)->get()->first();
+        if ($agent->id != $property->agent_id) {
+            throw new WithErrorCodeException('You don\'t have access to delete this property', 403);
+        }
+
+        $property->delete();
     }
 }

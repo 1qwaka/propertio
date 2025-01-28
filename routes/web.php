@@ -99,7 +99,7 @@ Route::controller(\App\Http\Controllers\PropertyController::class)
         Route::middleware(\App\Http\Middleware\MyAuthAgentMiddleware::class)->group(function () {
             Route::post('', 'create');
             Route::patch('/{id}', 'update')->whereNumber('id');
-            Route::get('/self', 'self');
+//            Route::get('/self', 'self');
             Route::delete('/{id}', 'delete')->whereNumber('id');
         });
 
@@ -117,7 +117,7 @@ Route::controller(\App\Http\Controllers\AdvertisementController::class)
     ->prefix('advertisements')->group(function () {
         Route::middleware(\App\Http\Middleware\MyAuthAgentMiddleware::class)->group(function () {
             Route::post('', 'create');
-            Route::get('/self', 'self');
+//            Route::get('/self', 'self');
             Route::patch('/{id}', 'update')->whereNumber('id');
             Route::delete('/{id}', 'delete')->whereNumber('id');
         });

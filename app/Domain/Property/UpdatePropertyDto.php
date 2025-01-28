@@ -5,6 +5,7 @@ namespace App\Domain\Property;
 readonly class UpdatePropertyDto
 {
     public function __construct(
+        public int $id,
         public ?string $renovation = null,
         public ?int $floor = null,
         public ?int $area = null,

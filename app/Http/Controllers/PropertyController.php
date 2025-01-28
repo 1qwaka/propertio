@@ -6,6 +6,7 @@ use App\Domain\Property\CreatePropertyDto;
 use App\Domain\Property\GetPropertiesDto;
 use App\Domain\Property\IPropertyService;
 use App\Domain\Property\LivingSpaceType;
+use App\Domain\Property\UpdatePropertyDto;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -114,61 +115,22 @@ class PropertyController extends Controller
             return response()->json(['message' => 'Error', 'errors' => $validated->errors()], 400);
         }
 
-        $validated = $validated->safe();
+        $data = new UpdatePropertyDto(...$validated->safe()->merge([
+            'livingSpaceType' => LivingSpaceType::tryFrom($validated->getValue('livingSpaceType')),
+            'id' => $id,
+        ]));
 
-        // Найдем помещение по его ID
-        $property = Property::find($id);
-
-        if (!$property) {
-            return response()->json(['message' => 'Property not found'], 404);
-        }
-
-        $agent = Auth::user()->agent;
-        if ($agent->id != $property->agent_id) {
-            return response()->json(['message' => 'You don\'t have access to edit this property'], 403);
-        }
-
-        // Обновляем запись
-        try {
-            $property->update($validated->all());
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Error'], 500);
-        }
-
-        return response()->json(['message' => 'Success', 'item' => $property]);
+        return response()->json([
+            'message' => 'Success',
+            'item' => $this->propertyService->update($data),
+        ]);
     }
 
     // Метод для удаления записи помещения
-    public function delete(Request $request, $id)
+    public function delete(Request $request, int|string $id)
     {
-        $property = Property::find($id);
-
-        if (!$property) {
-            return response()->json(['message' => 'Property not found'], 404);
-        }
-
-        $agent = Auth::user()->agent;
-        if ($agent->id != $property->agent_id) {
-            return response()->json(['message' => 'You don\'t have access to delete this property'], 403);
-        }
-
-        try {
-            $property->delete();
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Error'], 500);
-        }
-
+        $this->propertyService->delete($id);
         return response()->json(['message' => 'Property deleted successfully']);
     }
 
-    public function self(Request $request)
-    {
-        $property = Property::where('agent_id', Auth::user()->agent->id)->get();
-
-        if (!$property) {
-            return response()->json(['message' => 'Property not found'], 404);
-        }
-
-        return response()->json(['message' => 'Success', 'item' => $property]);
-    }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Domain\Advertisement\IAdvertisementService;
 use App\Domain\Agent\IAgentService;
 use App\Domain\Property\IPropertyService;
 use App\Domain\User\IUserService;
+use App\Services\AdvertisementService;
 use App\Services\AgentService;
 use App\Services\PropertyService;
 use App\Services\UserService;
@@ -34,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
             IUserService::class => UserService::class,
             IAgentService::class => AgentService::class,
             IPropertyService::class => PropertyService::class,
+            IAdvertisementService::class => AdvertisementService::class,
         ];
         foreach ($services as $interface => $implementation) {
             $this->app->bind($interface, $implementation);

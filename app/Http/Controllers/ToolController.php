@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Property\LivingSpaceType;
+use App\Domain\Property\UpdatePropertyDto;
+use App\Exceptions\WithErrorCodeException;
 use App\Models\Agent;
 use App\Models\City;
 use App\Models\User;
+use App\Persistence\Converters\DtoToModelConverter;
 use Html2Text\Html2Text;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -38,21 +41,10 @@ class ToolController extends Controller
 
     public function testFunction(Request $request)
     {
-        $validated = Validator::make($request->all(), [
-            'page' => 'integer|min:1',
-            'perPage' => 'integer|min:1',
-            'agentId' => 'integer|exists:agents,id',
-            'livingSpaceType' => 'string|in:primary,secondary',
-        ]);
-
-        if ($validated->fails()) {
-            return response()->json(['message' => 'Error', 'errors' => $validated->errors()], 400);
-        }
-
-//        $data = new RealCoolClass(
-//            bebra: $validated->getValue('page')
-//        );
-        $data = $validated->getValue('page');
+        $data = DtoToModelConverter::toArray(new UpdatePropertyDto(
+            id: 12,
+            address: '',
+        ));
         return response()->json([
             'data' => $data,
             'type' => gettype($data),

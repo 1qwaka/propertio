@@ -14,8 +14,6 @@ interface IPropertyService
 
     public function get(GetPropertiesDto $data): PropertiesPageDto;
 
-    public function getSelf(GetPropertiesDto $data): array;
-
     public function update(UpdatePropertyDto $data): PropertyEntity;
 
     public function delete(int|string $id): void;
