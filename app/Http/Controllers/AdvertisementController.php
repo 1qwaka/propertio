@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Advertisement\AdvertisementStatus;
+use App\Domain\Advertisement\CreateAdvertisementDto;
 use App\Domain\Advertisement\GetAdvertisementsDto;
 use App\Domain\Advertisement\IAdvertisementService;
 use App\Domain\Advertisement\UpdateAdvertisementDto;
-use App\Domain\Property\CreateAdvertisementDto;
-use App\Models\Advertisement;
-use App\Models\Property;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AdvertisementController extends Controller
@@ -98,6 +95,7 @@ class AdvertisementController extends Controller
 
     public function delete(Request $request, int $id)
     {
+        $this->advertisementService->delete($id);
         return response()->json(['message' => 'Advertisement deleted successfully']);
     }
 

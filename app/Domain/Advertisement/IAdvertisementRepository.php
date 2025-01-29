@@ -2,7 +2,7 @@
 
 namespace App\Domain\Advertisement;
 
-interface IAdvertisementService
+interface IAdvertisementRepository
 {
     public function create(CreateAdvertisementDto $data): AdvertisementEntity;
 

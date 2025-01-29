@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Domain\Property;
+namespace App\Domain\Advertisement;
 
-use App\Domain\Advertisement\AdvertisementStatus;
-
-readonly class CreateAdvertisementDto
+class CreateAdvertisementDto
 {
     public function __construct(
         public int $price,
@@ -12,6 +10,7 @@ readonly class CreateAdvertisementDto
         public AdvertisementStatus $type,
         public ?bool $hidden = false,
         public ?string $description = null,
+        public ?int $agentId = null,
     )
     {
     }

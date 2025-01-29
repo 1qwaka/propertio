@@ -2,7 +2,7 @@
 
 namespace App\Domain\Advertisement;
 
-readonly class GetAdvertisementsDto
+class GetAdvertisementsDto
 {
     public function __construct(
         public ?int $page = 1,
