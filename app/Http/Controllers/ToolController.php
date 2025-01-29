@@ -8,7 +8,9 @@ use App\Exceptions\WithErrorCodeException;
 use App\Models\Agent;
 use App\Models\City;
 use App\Models\User;
+use App\Models\ViewRequest;
 use App\Persistence\Converters\DtoToModelConverter;
+use Carbon\Carbon;
 use Html2Text\Html2Text;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -41,10 +43,7 @@ class ToolController extends Controller
 
     public function testFunction(Request $request)
     {
-        $data = DtoToModelConverter::toArray(new UpdatePropertyDto(
-            id: 12,
-            address: '',
-        ));
+        $data = (null)->value;
         return response()->json([
             'data' => $data,
             'type' => gettype($data),

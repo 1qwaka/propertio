@@ -14,7 +14,7 @@ class Advertisement extends Model
         'description',
         'price',
         'property_id',   // FK to Property
-        'type',          // enum: opened || accepted || rejected
+        'type',          // enum: sell || rent
         'hidden',        // Boolean для скрытия объявления
     ];
 

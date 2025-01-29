@@ -2,6 +2,11 @@
 
 namespace App\Persistence\Converters;
 
+/**
+ * Helper class to convert DTO objects to array
+ * for passing to eloquent model methods
+ * like update, create, etc.
+ */
 class DtoToModelConverter
 {
     public static function toArray(object $dto, bool $filter = true): array

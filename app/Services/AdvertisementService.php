@@ -32,7 +32,7 @@ class AdvertisementService implements IAdvertisementService
             [ 'agent_id' => $agent->id ],
         ));
 
-        return AdvertisementConverter::toArray($advertisement);
+        return AdvertisementConverter::toDomain($advertisement);
     }
 
     public function find(int|string $id): AdvertisementEntity
@@ -43,7 +43,7 @@ class AdvertisementService implements IAdvertisementService
             throw new WithErrorCodeException('Advertisement not found', 404);
         }
 
-        return AdvertisementConverter::toArray($advertisement);
+        return AdvertisementConverter::toDomain($advertisement);
     }
 
     public function get(GetAdvertisementsDto $data): AdvertisementPageDto
@@ -86,7 +86,7 @@ class AdvertisementService implements IAdvertisementService
         }
 
         $advertisement->update(DtoToModelConverter::toArray($data));
-        return AdvertisementConverter::toArray($advertisement);
+        return AdvertisementConverter::toDomain($advertisement);
     }
 
     public function delete(int|string $id): void

@@ -16,15 +16,4 @@ class ViewRequest extends Model
         'user_id',      // FK to User
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function property()
-    {
-        return $this->belongsTo(Property::class);
-    }
-
-
 }

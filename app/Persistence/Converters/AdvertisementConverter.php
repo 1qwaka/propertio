@@ -8,7 +8,7 @@ use App\Models\Advertisement;
 
 class AdvertisementConverter
 {
-    public static function toArray(Advertisement $model): AdvertisementEntity
+    public static function toDomain(Advertisement $model): AdvertisementEntity
     {
         return new AdvertisementEntity(
             id: $model->id,
