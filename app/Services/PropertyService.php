@@ -2,105 +2,72 @@
 
 namespace App\Services;
 
+use App\Domain\Agent\IAgentService;
 use App\Domain\Property\CreatePropertyDto;
 use App\Domain\Property\GetPropertiesDto;
+use App\Domain\Property\IPropertyRepository;
 use App\Domain\Property\IPropertyService;
+use App\Domain\Property\LivingSpaceType;
 use App\Domain\Property\PropertiesPageDto;
 use App\Domain\Property\PropertyEntity;
 use App\Domain\Property\UpdatePropertyDto;
 use App\Exceptions\WithErrorCodeException;
-use App\Models\Agent;
-use App\Models\Property;
-use App\Persistence\Converters\DtoToModelConverter;
-use App\Persistence\Converters\PropertyConverter;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+
 
 class PropertyService implements IPropertyService
 {
+    public function __construct(
+        private readonly IPropertyRepository $repository,
+        private readonly IAgentService $agentService,
+    )
+    {
+    }
 
     public function getFloorTypes(): array
     {
-        $types = DB::table('floor_type')->get();
-        return $types->toArray();
+        return $this->repository->getFloorTypes();
     }
 
     public function getSpaceTypes(): array
     {
-        return ['primary', 'secondary'];
+        return [LivingSpaceType::PRIMARY, LivingSpaceType::SECONDARY];
     }
 
     public function create(CreatePropertyDto $data): PropertyEntity
     {
-        $item = Property::create([
-            'renovation' => $data->renovation,
-            'building_id' => $data->buildingId,
-            'floor' => $data->floor,
-            'area' => $data->area,
-            'floor_type_id' => $data->floorTypeId,
-            'address' => $data->address,
-            'living_space_type' => $data->livingSpaceType,
-            'agent_id' => Auth::user()->agent->id,
-        ]);
-
-        return PropertyConverter::toDomain($item);
+        $data->agentId = $this->agentService->getSelf()->id;
+        return $this->repository->create($data);
     }
 
     public function find(int|string $id): PropertyEntity
     {
-        return PropertyConverter::toDomain(Property::find($id));
+        return $this->repository->find($id);
     }
 
     public function get(GetPropertiesDto $data): PropertiesPageDto
     {
-        $query = Property::query();
-
-        if ($data->agentId) {
-            $query->where('agent_id', $data->agentId);
-        }
-        if ($data->livingSpaceType) {
-            $query->where('living_space_type', $data->livingSpaceType);
-        }
-
-        $page = $query->paginate(perPage: $data->perPage, page: $data->page);
-        return new PropertiesPageDto(
-            $page->total(),
-            $page->currentPage(),
-            $page->perPage(),
-            $page->items()
-        );
+        return $this->repository->get($data);
     }
 
     public function update(UpdatePropertyDto $data): PropertyEntity
     {
-        $property = Property::find($data->id);
-        if (!$property) {
-            throw new WithErrorCodeException('Property not found', 404);
-        }
-
-        $agent = Agent::where('user_id', Auth::user()->id)->get()->first();
-        if ($agent->id != $property->agent_id) {
+        if (!$this->canEdit($data->id)) {
             throw new WithErrorCodeException('You don\'t have access to edit this property', 403);
         }
-
-        $property->update(DtoToModelConverter::toArray($data));
-        return PropertyConverter::toDomain($property);
+        return $this->repository->update($data);
     }
 
     public function delete(int|string $id): void
     {
-        $property = Property::find($id);
-
-        if (!$property) {
-            throw new WithErrorCodeException('Property not found', 404);
+        if (!$this->canEdit($id)) {
+            throw new WithErrorCodeException('You don\'t have access to edit this property', 403);
         }
+        $this->repository->delete($id);
+    }
 
-        $agent = Agent::where('user_id', Auth::user()->id)->get()->first();
-        if ($agent->id != $property->agent_id) {
-            throw new WithErrorCodeException('You don\'t have access to delete this property', 403);
-        }
-
-        $property->delete();
+    private function canEdit(int $id): bool {
+        $item = $this->repository->find($id);
+        $currentAgentId = $this->agentService->getSelf()->id;
+        return $currentAgentId === $item->agentId;
     }
 }

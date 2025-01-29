@@ -9,6 +9,7 @@ use App\Domain\Building\IBuildingRepository;
 use App\Domain\Building\IBuildingService;
 use App\Domain\Developer\IDeveloperRepository;
 use App\Domain\Developer\IDeveloperService;
+use App\Domain\Property\IPropertyRepository;
 use App\Domain\Property\IPropertyService;
 use App\Domain\User\IUserService;
 use App\Domain\ViewRequest\IViewRequestRepository;
@@ -16,6 +17,7 @@ use App\Domain\ViewRequest\IViewRequestService;
 use App\Persistence\Repository\AdvertisementRepository;
 use App\Persistence\Repository\BuildingRepository;
 use App\Persistence\Repository\DeveloperRepository;
+use App\Persistence\Repository\PropertyRepository;
 use App\Persistence\Repository\ViewRequestRepository;
 use App\Services\AdvertisementService;
 use App\Services\AgentService;
@@ -59,6 +61,7 @@ class AppServiceProvider extends ServiceProvider
             IDeveloperRepository::class => DeveloperRepository::class,
             IViewRequestRepository::class => ViewRequestRepository::class,
             IAdvertisementRepository::class => AdvertisementRepository::class,
+            IPropertyRepository::class => PropertyRepository::class,
         ];
         foreach ($services as $interface => $implementation) {
             $this->app->bind($interface, $implementation);

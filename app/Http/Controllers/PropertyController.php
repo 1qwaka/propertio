@@ -7,10 +7,7 @@ use App\Domain\Property\GetPropertiesDto;
 use App\Domain\Property\IPropertyService;
 use App\Domain\Property\LivingSpaceType;
 use App\Domain\Property\UpdatePropertyDto;
-use App\Models\Property;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
