@@ -2,16 +2,15 @@
 
 namespace App\Domain\Agent;
 
-interface IAgentService
+interface IAgentRepository
 {
-    public function getSelf(): AgentEntity;
-
     public function getTypes(): array;
 
-//    public function getStats(): AgentStatsDto;
+    public function findByUser(int $id): AgentEntity;
+
+//    public function getStats(int $id): AgentStatsDto;
 
     public function create(CreateAgentDto $data): AgentEntity;
 
     public function update(UpdateAgentDto $data): AgentEntity;
-
 }

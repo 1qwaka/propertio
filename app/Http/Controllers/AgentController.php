@@ -44,7 +44,7 @@ class AgentController extends Controller
             ], 400);
         }
 
-        $data = new CreateAgentDto(...$validated->safe()->only(['typeId', 'name', 'address', 'email']));
+        $data = new CreateAgentDto(...$validated->safe()->all());
 
         return response()->json([
             'message' => 'Success',
@@ -68,21 +68,21 @@ class AgentController extends Controller
             ], 400);
         }
 
-        $data = new UpdateAgentDto(...$validated->safe()->only(['typeId', 'name', 'address', 'email']));
+        $data = new UpdateAgentDto(...$validated->safe()->all());
         return response()->json([
             'message' => 'Success',
             'item' => $this->agentService->update($data),
         ]);
     }
 
-    public function stats(Request $request)
-    {
-        $res = $this->agentService->getStats();
-        return response()->json([
-            'message' => 'Success',
-            'count' => $res['count'],
-        ]);
-    }
+//    public function stats(Request $request)
+//    {
+//        $res = $this->agentService->getStats();
+//        return response()->json([
+//            'message' => 'Success',
+//            'count' => $res['count'],
+//        ]);
+//    }
 
     public function self(Request $request)
     {

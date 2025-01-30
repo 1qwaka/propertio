@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Domain\Advertisement\IAdvertisementRepository;
 use App\Domain\Advertisement\IAdvertisementService;
+use App\Domain\Agent\IAgentRepository;
 use App\Domain\Agent\IAgentService;
 use App\Domain\Building\IBuildingRepository;
 use App\Domain\Building\IBuildingService;
@@ -11,13 +12,16 @@ use App\Domain\Developer\IDeveloperRepository;
 use App\Domain\Developer\IDeveloperService;
 use App\Domain\Property\IPropertyRepository;
 use App\Domain\Property\IPropertyService;
+use App\Domain\User\IUserRepository;
 use App\Domain\User\IUserService;
 use App\Domain\ViewRequest\IViewRequestRepository;
 use App\Domain\ViewRequest\IViewRequestService;
 use App\Persistence\Repository\AdvertisementRepository;
+use App\Persistence\Repository\AgentRepository;
 use App\Persistence\Repository\BuildingRepository;
 use App\Persistence\Repository\DeveloperRepository;
 use App\Persistence\Repository\PropertyRepository;
+use App\Persistence\Repository\UserRepository;
 use App\Persistence\Repository\ViewRequestRepository;
 use App\Services\AdvertisementService;
 use App\Services\AgentService;
@@ -62,6 +66,8 @@ class AppServiceProvider extends ServiceProvider
             IViewRequestRepository::class => ViewRequestRepository::class,
             IAdvertisementRepository::class => AdvertisementRepository::class,
             IPropertyRepository::class => PropertyRepository::class,
+            IAgentRepository::class => AgentRepository::class,
+            IUserRepository::class => UserRepository::class,
         ];
         foreach ($services as $interface => $implementation) {
             $this->app->bind($interface, $implementation);
