@@ -22,12 +22,16 @@ return new class extends Migration
 //        });
 
         DB::statement("
-            create type view_request_status_t as enum
-            (
-                'open',
-                'accepted',
-                'rejected'
-            );
+            DO $$ BEGIN
+                create type view_request_status_t as enum
+                (
+                    'open',
+                    'accepted',
+                    'rejected'
+                );
+            EXCEPTION
+                WHEN duplicate_object THEN null;
+            END $$;
         ");
 
         DB::statement("

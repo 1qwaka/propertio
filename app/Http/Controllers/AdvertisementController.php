@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class AdvertisementController extends Controller
 {
     public function __construct(
-        private IAdvertisementService $advertisementService,
+        private readonly IAdvertisementService $advertisementService,
     )
     {
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\User\CreateUserDto;
 use App\Domain\User\IUserService;
 use App\Domain\User\LoginUserDto;
+use App\Exceptions\WithErrorCodeException;
 use App\Http\Requests\UserRequest;
 use App\Http\View\UserView;
 use App\Models\User;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     public function __construct(
-        private IUserService $userService,
+        private readonly IUserService $userService,
     )
     {
     }
@@ -68,7 +69,7 @@ class UserController extends Controller
         try {
             $user = $this->userService->login($data);
             return response()->json(['message' => 'Login successful', 'user' => UserView::toArray($user)]);
-        } catch (\Exception $e) {
+        } catch (WithErrorCodeException $e) {
             return response()->json(['message' => 'Login failed'], 401);
         }
     }

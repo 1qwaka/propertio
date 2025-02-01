@@ -16,6 +16,13 @@ use App\Domain\User\IUserRepository;
 use App\Domain\User\IUserService;
 use App\Domain\ViewRequest\IViewRequestRepository;
 use App\Domain\ViewRequest\IViewRequestService;
+use App\Models\Advertisement;
+use App\Models\Agent;
+use App\Models\Building;
+use App\Models\Developer;
+use App\Models\Property;
+use App\Models\User;
+use App\Models\ViewRequest;
 use App\Persistence\Repository\AdvertisementRepository;
 use App\Persistence\Repository\AgentRepository;
 use App\Persistence\Repository\BuildingRepository;
@@ -72,5 +79,13 @@ class AppServiceProvider extends ServiceProvider
         foreach ($services as $interface => $implementation) {
             $this->app->bind($interface, $implementation);
         }
+
+        $this->app->bind(Building::class, fn () => new Building());
+        $this->app->bind(Developer::class, fn () => new Developer());
+        $this->app->bind(Advertisement::class, fn () => new Advertisement());
+        $this->app->bind(Agent::class, fn () => new Agent());
+        $this->app->bind(Property::class, fn () => new Property());
+        $this->app->bind(User::class, fn () => new User());
+        $this->app->bind(ViewRequest::class, fn () => new ViewRequest());
     }
 }

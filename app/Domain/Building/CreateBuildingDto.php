@@ -2,7 +2,7 @@
 
 namespace App\Domain\Building;
 
-readonly class CreateBuildingDto
+class CreateBuildingDto
 {
     public function __construct(
         public int $typeId,

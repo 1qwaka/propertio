@@ -75,7 +75,7 @@ create table buildings
     hot_water    boolean  default true          ,
     gas          boolean  default true          ,
     elevators    smallint default 0
-        constraint check_elevators check ( elevators >= 0 ),
+        constraint check_elevators check      ( elevators >= 0 ),
     floors       smallint                       not null
         constraint check_floors check ( floors >= 0 ),
     build_year   smallint                       not null,

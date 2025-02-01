@@ -2,7 +2,7 @@
 
 namespace App\Domain\Building;
 
-readonly class UpdateBuildingDto
+class UpdateBuildingDto
 {
     public function __construct(
         public int $id,

@@ -26,11 +26,15 @@ return new class extends Migration
 
 
         DB::statement("
-            create type advertisement_type_t as enum
-            (
-                'sell',
-                'rent'
-            );
+            DO $$ BEGIN
+                create type advertisement_type_t as enum
+                (
+                    'sell',
+                    'rent'
+                );
+            EXCEPTION
+                WHEN duplicate_object THEN null;
+            END $$;
         ");
 
         DB::statement("

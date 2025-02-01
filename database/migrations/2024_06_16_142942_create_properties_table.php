@@ -52,11 +52,15 @@ return new class extends Migration
         ");
 
         DB::statement("
-            create type living_space_t as enum
-            (
-                'primary',
-                'secondary'
-            );
+            DO $$ BEGIN
+                create type living_space_t as enum
+                (
+                    'primary',
+                    'secondary'
+                );
+            EXCEPTION
+                WHEN duplicate_object THEN null;
+            END $$;
         ");
 
 

@@ -5,11 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\Agent\CreateAgentDto;
 use App\Domain\Agent\IAgentService;
 use App\Domain\Agent\UpdateAgentDto;
-use App\Http\View\AgentView;
-use App\Models\Agent;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class AgentController extends Controller

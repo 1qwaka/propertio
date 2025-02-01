@@ -16,15 +16,21 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DeveloperRepository implements IDeveloperRepository
 {
+    public function __construct(
+        private readonly Developer $model,
+    )
+    {
+    }
+
     public function create(CreateDeveloperDto $data): DeveloperEntity
     {
-        $developer = Developer::create(DtoToModelConverter::toArray($data));
+        $developer = $this->model->newQuery()->create(DtoToModelConverter::toArray($data));
         return DeveloperConverter::toDomain($developer);
     }
 
     public function find(int $id): DeveloperEntity
     {
-        $item = Developer::find($id);
+        $item = $this->model->newQuery()->find($id);
         if ($item == null) {
             throw new ModelNotFoundException('Developer not found');
         }
@@ -34,7 +40,7 @@ class DeveloperRepository implements IDeveloperRepository
 
     public function paginate(GetDevelopersDto $data): DeveloperPageDto
     {
-        $query = Developer::query();
+        $query = $this->model->newQuery();
 
         if ($data->name) {
             $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($data->name) . '%']);
@@ -56,18 +62,19 @@ class DeveloperRepository implements IDeveloperRepository
 
     public function update(UpdateDeveloperDto $data): DeveloperEntity
     {
-        $developer = Developer::find($data->id);
+        $developer = $this->model->newQuery()->find($data->id);
         if ($developer == null) {
             throw new WithErrorCodeException('Developer not found', 404);
         }
 
-        $developer->update(DtoToModelConverter::toArray($data));
+        $this->model->newQuery()->where('id', $data->id)
+            ->update(DtoToModelConverter::toArray($data));
         return DeveloperConverter::toDomain($developer);
     }
 
     public function delete(int $id): void
     {
-        $developer = Developer::find($id);
+        $developer = $this->model->newQuery()->find($id);
 
         if ($developer == null) {
             throw new WithErrorCodeException('Developer not found', 404);

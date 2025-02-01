@@ -2,6 +2,8 @@
 
 namespace App\Persistence\Converters;
 
+use Illuminate\Support\Str;
+
 /**
  * Helper class to convert DTO objects to array
  * for passing to eloquent model methods
@@ -13,7 +15,7 @@ class DtoToModelConverter
     {
         $res = array();
         foreach (get_object_vars($dto) as $key => $val) {
-            $res[\Str::snake($key)] = $val;
+            $res[Str::snake($key)] = $val;
         }
         return $filter
             ? array_filter($res, fn($v) => $v !== null)

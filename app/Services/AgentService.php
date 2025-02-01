@@ -3,16 +3,10 @@
 namespace App\Services;
 
 use App\Domain\Agent\AgentEntity;
-use App\Domain\Agent\AgentStatsDto;
-use App\Domain\Agent\AgentType;
 use App\Domain\Agent\CreateAgentDto;
 use App\Domain\Agent\IAgentRepository;
 use App\Domain\Agent\IAgentService;
 use App\Domain\Agent\UpdateAgentDto;
-use App\Models\Agent;
-use App\Persistence\Converters\AgentConverter;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class AgentService implements IAgentService
 {

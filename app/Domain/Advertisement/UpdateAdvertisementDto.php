@@ -8,7 +8,7 @@ readonly class UpdateAdvertisementDto
         public int $id,
         public ?string $description = null,
         public ?int $price = null,
-        public ?string $type = null,
+        public ?AdvertisementStatus $type = null,
         public ?bool $hidden = null,
     )
     {

@@ -28,40 +28,40 @@ Route::middleware(\App\Http\Middleware\MyAuthMiddleware::class)
     ->prefix('agents')->group(function () {
         Route::post('/register', 'register');
         Route::get('/types', 'types');
-        Route::get('/stats', 'stats');
+//        Route::get('/stats', 'stats');
         Route::get('/self', 'self');
         Route::patch('', 'update');
 
     });
 
-Route::controller(\App\Http\Controllers\CityController::class)
-    ->prefix('cities')->group(function () {
-        Route::middleware(\App\Http\Middleware\MyAuthAdminMiddleware::class)->group(function () {
-            Route::post('', 'create');
-            Route::patch('/{id}', 'update');
-            Route::delete('/{id}', 'delete');
-        });
+//Route::controller(\App\Http\Controllers\CityController::class)
+//    ->prefix('cities')->group(function () {
+//        Route::middleware(\App\Http\Middleware\MyAuthAdminMiddleware::class)->group(function () {
+//            Route::post('', 'create');
+//            Route::patch('/{id}', 'update');
+//            Route::delete('/{id}', 'delete');
+//        });
+//
+//        Route::middleware(\App\Http\Middleware\MyAuthMiddleware::class)->group(function () {
+//            Route::get('/{id}', 'readById');
+//            Route::get('', 'read');
+//        });
+//    });
 
-        Route::middleware(\App\Http\Middleware\MyAuthMiddleware::class)->group(function () {
-            Route::get('/{id}', 'readById');
-            Route::get('', 'read');
-        });
-    });
 
-
-Route::controller(\App\Http\Controllers\DistrictController::class)
-    ->prefix('districts')->group(function () {
-        Route::middleware(\App\Http\Middleware\MyAuthAdminMiddleware::class)->group(function () {
-            Route::post('', 'create');
-            Route::patch('/{id}', 'update');
-            Route::delete('/{id}', 'delete');
-        });
-
-        Route::middleware(\App\Http\Middleware\MyAuthMiddleware::class)->group(function () {
-            Route::get('/{id}', 'readById');
-            Route::get('', 'read');
-        });
-    });
+//Route::controller(\App\Http\Controllers\DistrictController::class)
+//    ->prefix('districts')->group(function () {
+//        Route::middleware(\App\Http\Middleware\MyAuthAdminMiddleware::class)->group(function () {
+//            Route::post('', 'create');
+//            Route::patch('/{id}', 'update');
+//            Route::delete('/{id}', 'delete');
+//        });
+//
+//        Route::middleware(\App\Http\Middleware\MyAuthMiddleware::class)->group(function () {
+//            Route::get('/{id}', 'readById');
+//            Route::get('', 'read');
+//        });
+//    });
 
 Route::controller(\App\Http\Controllers\DeveloperController::class)
     ->prefix('developers')->group(function () {
@@ -144,19 +144,19 @@ Route::controller(\App\Http\Controllers\ViewRequestController::class)
         });
     });
 
-Route::controller(\App\Http\Controllers\ContractController::class)
-    ->prefix('contracts')->group(function () {
-        Route::middleware(\App\Http\Middleware\MyAuthAgentMiddleware::class)->group(function () {
-            Route::post('', 'create');
-            Route::get('/agent', 'readAgent');
-            Route::patch('/{id}', 'update');
-            Route::delete('/{id}', 'delete');
-
-        });
-
-        Route::middleware(\App\Http\Middleware\MyAuthMiddleware::class)->group(function () {
-            Route::post('/status/{id}', 'changeStatus');
-            Route::get('/user', 'readUser');
-            Route::get('/{id}', 'readById');
-        });
-    });
+//Route::controller(\App\Http\Controllers\ContractController::class)
+//    ->prefix('contracts')->group(function () {
+//        Route::middleware(\App\Http\Middleware\MyAuthAgentMiddleware::class)->group(function () {
+//            Route::post('', 'create');
+//            Route::get('/agent', 'readAgent');
+//            Route::patch('/{id}', 'update');
+//            Route::delete('/{id}', 'delete');
+//
+//        });
+//
+//        Route::middleware(\App\Http\Middleware\MyAuthMiddleware::class)->group(function () {
+//            Route::post('/status/{id}', 'changeStatus');
+//            Route::get('/user', 'readUser');
+//            Route::get('/{id}', 'readById');
+//        });
+//    });

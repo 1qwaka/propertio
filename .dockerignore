@@ -1,0 +1,9 @@
+/data
+/build
+/vendor
+/.idea
+/.vscode
+/.git
+.env.example
+.env
+.env.testing

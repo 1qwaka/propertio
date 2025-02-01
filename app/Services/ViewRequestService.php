@@ -15,7 +15,6 @@ use App\Domain\ViewRequest\ViewRequestPageDto;
 use App\Domain\ViewRequest\ViewRequestStatus;
 use App\Exceptions\WithErrorCodeException;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 class ViewRequestService implements IViewRequestService
 {

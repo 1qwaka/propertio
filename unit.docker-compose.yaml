@@ -1,0 +1,39 @@
+version: "3.9"
+name: laravel-app-unit-test
+services:
+  app:
+    build:
+      context: .
+      dockerfile: app-unit.dockerfile
+    ports:
+      - "8228:8000"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    environment:
+      APP_URL: ${APP_URL}
+      APP_KEY: ${APP_KEY}
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: postgres-db
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+  postgres-db:
+    image: postgres:14.8-alpine3.18
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}"]
+      interval: 1s
+      timeout: 5s
+      retries: 5
+      start_period: 3s
+networks:
+  app-network:

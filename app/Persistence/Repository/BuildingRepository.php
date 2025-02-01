@@ -16,19 +16,25 @@ use Illuminate\Support\Facades\DB;
 
 class BuildingRepository implements IBuildingRepository
 {
+    public function __construct(
+        private readonly Building $model,
+    )
+    {
+    }
+
     public function getTypes(): array
     {
         return DB::table('building_type')->get()->toArray();
     }
     public function create(CreateBuildingDto $data): BuildingEntity
     {
-        $building = Building::create(DtoToModelConverter::toArray($data));
+        $building = $this->model->newQuery()->create(DtoToModelConverter::toArray($data));
         return BuildingConverter::toDomain($building);
     }
 
     public function find(int $id): BuildingEntity
     {
-        $building = Building::find($id);
+        $building = $this->model->newQuery()->find($id);
 
         if (!$building) {
             throw new ModelNotFoundException('Building not found');
@@ -39,7 +45,7 @@ class BuildingRepository implements IBuildingRepository
 
     public function paginate(int $page, int $perPage): BuildingPageDto
     {
-        $pagination = Building::paginate(perPage: $perPage, page: $page);
+        $pagination = $this->model->newQuery()->paginate(perPage: $perPage, page: $page);
 
         return new BuildingPageDto(
             $pagination->total(),
@@ -51,18 +57,20 @@ class BuildingRepository implements IBuildingRepository
 
     public function update(UpdateBuildingDto $data): BuildingEntity
     {
-        $building = Building::find($data->id);
+        $building = $this->model->newQuery()->find($data->id);
         if (!$building) {
             throw new WithErrorCodeException('Building not found', 404);
         }
 
-        $building->update(DtoToModelConverter::toArray($data));
+        $this->model->newQuery()->where('id', $data->id)
+            ->update(DtoToModelConverter::toArray($data));
+
         return BuildingConverter::toDomain($building);
     }
 
     public function delete(int $id): void
     {
-        $building = Building::find($id);
+        $building = $this->model->newQuery()->find($id);
 
         if (!$building) {
             throw new WithErrorCodeException('Building not found', 404);

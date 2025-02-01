@@ -12,13 +12,6 @@ use App\Domain\Advertisement\UpdateAdvertisementDto;
 use App\Domain\Agent\IAgentService;
 use App\Domain\Property\IPropertyService;
 use App\Exceptions\WithErrorCodeException;
-use App\Models\Advertisement;
-use App\Models\Agent;
-use App\Models\Property;
-use App\Persistence\Converters\AdvertisementConverter;
-use App\Persistence\Converters\DtoToModelConverter;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
 
 class AdvertisementService implements IAdvertisementService
 {

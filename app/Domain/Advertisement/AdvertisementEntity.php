@@ -11,7 +11,7 @@ class AdvertisementEntity
         public ?int $id,
         public int $agentId,
         public ?string $description,
-        public float $price,
+        public int $price,
         public int $propertyId,
         public AdvertisementStatus $type,
         public ?bool $hidden,
