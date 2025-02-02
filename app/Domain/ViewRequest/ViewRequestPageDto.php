@@ -2,7 +2,7 @@
 
 namespace App\Domain\ViewRequest;
 
-readonly class ViewRequestPageDto
+class ViewRequestPageDto
 {
     public function __construct(
         public int $total,

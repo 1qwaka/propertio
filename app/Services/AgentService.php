@@ -28,11 +28,6 @@ class AgentService implements IAgentService
         return $this->repository->getTypes();
     }
 
-//    public function getStats(): AgentStatsDto
-//    {
-//        return $this->repository->getStats($this->getSelf()->id);
-//    }
-
     public function create(CreateAgentDto $data): AgentEntity
     {
         $data->userId = $this->userService->getSelf()->id;

@@ -1,6 +1,7 @@
 <?php
 
-namespace Service;
+namespace Tests\Unit\Service;
+
 use App\Domain\Agent\IAgentService;
 use App\Domain\Property\IPropertyRepository;
 use App\Domain\Property\LivingSpaceType;

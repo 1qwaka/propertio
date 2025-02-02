@@ -2,7 +2,7 @@
 
 namespace App\Domain\User;
 
-readonly class LoginUserDto
+class LoginUserDto
 {
     public function __construct(
         public string $email,

@@ -2,7 +2,7 @@
 
 namespace App\Domain\Advertisement;
 
-readonly class UpdateAdvertisementDto
+class UpdateAdvertisementDto
 {
     public function __construct(
         public int $id,

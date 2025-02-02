@@ -1,7 +1,6 @@
 <?php
 
-namespace Tests\Unit\Service;
-
+namespace Tests\Integration;
 
 use App\Models\Building;
 use App\Persistence\Converters\DtoToModelConverter;
@@ -11,14 +10,14 @@ use Database\Seeders\BuildingTypeSeeder;
 use Database\Seeders\DeveloperSeeder;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
+use Qameta\Allure\Allure;
+use Qameta\Allure\Attribute\Epic;
 use Tests\TestCase;
 use Tests\Util\BuildingMother;
 use Tests\Util\TestUtil;
 
-class BuildingServiceClassicTest extends TestCase
+class BuildingTest extends TestCase
 {
-    // по какой то причине RefreshDatabase не работал
     use DatabaseTruncation;
 
     private BuildingService $service;
@@ -26,11 +25,13 @@ class BuildingServiceClassicTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Allure::epic('Integration');
 
         $repository = new BuildingRepository(new Building);
         $this->service = new BuildingService($repository);
     }
 
+    #[Epic('Integration')]
     public function testCreate(): void
     {
         $this->seed([BuildingTypeSeeder::class, DeveloperSeeder::class]);
@@ -41,6 +42,7 @@ class BuildingServiceClassicTest extends TestCase
 
         $this->assertDatabaseHas('buildings', DtoToModelConverter::toArray($result));
     }
+    #[Epic('Integration')]
     public function testFind(): void
     {
         $this->seed([BuildingTypeSeeder::class, DeveloperSeeder::class]);
@@ -54,6 +56,7 @@ class BuildingServiceClassicTest extends TestCase
         $this->assertEquals($arr1, $arr2);
     }
 
+    #[Epic('Integration')]
     public function testGet(): void
     {
         $this->seed([BuildingTypeSeeder::class, DeveloperSeeder::class]);
@@ -68,6 +71,7 @@ class BuildingServiceClassicTest extends TestCase
         }
     }
 
+    #[Epic('Integration')]
     public function testUpdate(): void
     {
         $this->seed([BuildingTypeSeeder::class, DeveloperSeeder::class]);
@@ -87,6 +91,7 @@ class BuildingServiceClassicTest extends TestCase
         ]);
     }
 
+    #[Epic('Integration')]
     public function testDelete(): void
     {
         $this->seed([BuildingTypeSeeder::class, DeveloperSeeder::class]);

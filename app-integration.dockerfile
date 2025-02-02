@@ -15,4 +15,4 @@ RUN docker-php-ext-install pdo pdo_pgsql
 RUN composer install
 RUN echo '' > .env
 
-CMD php artisan test --order-by=random --testsuite=Unit
+CMD php artisan test --order-by=random --testsuite=Integration

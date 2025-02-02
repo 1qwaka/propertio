@@ -24,7 +24,7 @@ class ViewRequestRepository implements IViewRequestRepository
         $item = ViewRequest::create([
             'date' => $data->date->toString(),
             'property_id' => $data->propertyId,
-            'status' => ViewRequestStatus::OPEN,
+            'status' => ViewRequestStatus::OPEN->value,
             'user_id' => $data->userId,
         ]);
 

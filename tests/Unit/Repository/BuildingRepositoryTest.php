@@ -1,6 +1,6 @@
 <?php
 
-namespace Repository;
+namespace Tests\Unit\Repository;
 
 use App\Domain\Building\IBuildingRepository;
 use App\Exceptions\WithErrorCodeException;

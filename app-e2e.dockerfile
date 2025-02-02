@@ -13,6 +13,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN docker-php-ext-install pdo pdo_pgsql
 RUN composer install
-RUN echo '' > .env
 
-CMD php artisan test --order-by=random --testsuite=Unit
+CMD php artisan migrate --force && \
+    php artisan db:seed --force && \
+    php artisan serve --host=0.0.0.0 --port=8000

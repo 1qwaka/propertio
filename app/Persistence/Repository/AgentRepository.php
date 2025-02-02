@@ -23,7 +23,7 @@ class AgentRepository implements IAgentRepository
 
     public function findByUser(int $id): AgentEntity
     {
-        $item = Agent::find($id);
+        $item = Agent::where('user_id', $id)->get()->first();
         if (!$item) {
             throw new ModelNotFoundException('Agent not found');
         }

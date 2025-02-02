@@ -19,11 +19,18 @@ class MyAuthAgentMiddleware
         $user = Auth::user();
 
         if ($user == null) {
-            return response()->json(['message' => 'You are not logged in'], 401);
+            return response()->json([
+                'message' => 'You are not logged in',
+                'id' => Auth::id(),
+                'user' => Auth::user(),
+                'cook' => $request->cookies,
+            ], 401);
         }
 
         if ($user->agent == null) {
-            return response()->json(['message' => 'You must be an Agent to perform this action'], 403);
+            return response()->json([
+                'message' => 'You must be an Agent to perform this action'
+            ], 403);
         }
 
         return $next($request);

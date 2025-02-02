@@ -2,7 +2,7 @@
 
 namespace App\Domain\Property;
 
-readonly class UpdatePropertyDto
+class UpdatePropertyDto
 {
     public function __construct(
         public int $id,

@@ -38,7 +38,7 @@ class PropertyController extends Controller
     {
         $validated = Validator::make($request->all(), [
             'renovation' => 'string|max:255',
-            'buildingId' => 'integer|min:0|exists:buildings,id',
+            'buildingId' => 'required|integer|min:0|exists:buildings,id',
             'floor' => 'required|integer',
             'area' => 'integer|min:1',
             'floorTypeId' => 'required|integer|exists:floor_type,id',

@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Unit\Service;
+namespace Tests\Unit\Service;
 
 use App\Domain\Building\IBuildingRepository;
 use App\Services\BuildingService;

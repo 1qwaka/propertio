@@ -9,7 +9,7 @@ class CreateAgentDto
         public string $name,
         public string $address,
         public string $email,
-        public ?int $userId,
+        public ?int $userId = null,
     )
     {
     }

@@ -12,14 +12,14 @@ use App\Domain\Property\UpdatePropertyDto;
 class PropertyMother
 {
     public const DEFAULT_ID = 1;
-    public const DEFAULT_BUILDING_ID = 101;
+    public const DEFAULT_BUILDING_ID = 1;
     public const DEFAULT_FLOOR = 3;
-    public const DEFAULT_FLOOR_TYPE_ID = 2;
+    public const DEFAULT_FLOOR_TYPE_ID = 1;
     public const DEFAULT_ADDRESS = '123 Main St';
     public const DEFAULT_LIVING_SPACE_TYPE = LivingSpaceType::PRIMARY;
     public const DEFAULT_RENOVATION = 'Newly renovated';
     public const DEFAULT_AREA = 50;
-    public const DEFAULT_AGENT_ID = 10;
+    public const DEFAULT_AGENT_ID = 1;
 
     public static function defaultCreatePropertyDto(): CreatePropertyDto
     {

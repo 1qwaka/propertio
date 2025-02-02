@@ -34,7 +34,9 @@ class ViewRequestController extends Controller
             return response()->json(['message' => 'Validation Error', 'errors' => $validated->errors()], 400);
         }
 
-        $data = new CreateViewRequestDto(...$validated->safe()->all());
+        $data = new CreateViewRequestDto(...array_merge($validated->safe()->all(), [
+            'date' => Carbon::parse($validated->getValue('date')),
+        ]));
         return response()->json([
             'message' => 'View request created successfully',
             'item' => $this->service->create($data),

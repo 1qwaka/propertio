@@ -1,10 +1,10 @@
 version: "3.9"
-name: laravel-app-unit-test
+name: laravel-app-e2e-test
 services:
   app:
     build:
       context: .
-      dockerfile: app-unit.dockerfile
+      dockerfile: app-e2e.dockerfile
     depends_on:
       postgres-db:
         condition: service_healthy
@@ -17,6 +17,28 @@ services:
       DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
+    networks:
+      database:
+      tester:
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+  app-e2e-tester:
+    build:
+      context: .
+      dockerfile: app-e2e-tester.dockerfile
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      app:
+        condition: service_healthy
+    environment:
+      APP_E2E_TEST_URL: http://app:8000
+    networks:
+      tester:
   postgres-db:
     image: postgres:14.8-alpine3.18
     environment:
@@ -29,3 +51,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 3s
+    networks:
+      database:
+networks:
+  database:
+  tester:

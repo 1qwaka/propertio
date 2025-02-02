@@ -1,10 +1,10 @@
 version: "3.9"
-name: laravel-app-unit-test
+name: laravel-app-integration-test
 services:
   app:
     build:
       context: .
-      dockerfile: app-unit.dockerfile
+      dockerfile: app-integration.dockerfile
     depends_on:
       postgres-db:
         condition: service_healthy
