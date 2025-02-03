@@ -27,21 +27,16 @@ class AgentTest extends TestCase
 
     protected function setUp(): void
     {
+        if (env('CI_SKIP') == 'true') {
+            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
+            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
+        }
         parent::setUp();
 
         $agentRepository = new AgentRepository();
         $userRepository = new UserRepository();
         $userService = new UserService($userRepository);
         $this->service = new AgentService($agentRepository, $userService);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        if (env('CI_SKIP') == 'true') {
-            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
-            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
-        }
     }
 
     #[Epic('Integration')]
