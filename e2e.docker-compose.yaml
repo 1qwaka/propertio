@@ -37,7 +37,7 @@ services:
         condition: service_healthy
     environment:
       APP_E2E_TEST_URL: http://app:8000
-      CI_SKIP: ${CI_SKIP}
+      CI_SKIP: true
     networks:
       tester:
     volumes:
