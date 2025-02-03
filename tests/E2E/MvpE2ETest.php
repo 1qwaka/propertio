@@ -6,6 +6,7 @@ use App\Domain\User\UserEntity;
 use App\Domain\ViewRequest\ViewRequestStatus;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use NunoMaduro\Collision\Adapters\Laravel\Commands\TestCommand;
@@ -29,6 +30,9 @@ class MvpE2ETest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $env = serialize($_ENV);
+        echo "12345aaaaaaa $env \n";
 
         if (env('CI_SKIP') == 'true') {
             Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
