@@ -70,7 +70,7 @@ jobs:
 
       - name: Add skipping flag to integration tests
         id: add_skip
-        if: ${{ needs.unit_tests.outputs.ci_skip == 'true' }}
+        if: needs.unit_tests.outputs.ci_skip == 'true'
         run: |
           echo "CI_SKIP=true" >> .env
 
@@ -80,7 +80,7 @@ jobs:
 
       - name: Set Skip
         id: set_skip
-        if: failure() || ${{ needs.unit_tests.outputs.ci_skip == 'true' }}
+        if: failure() || needs.unit_tests.outputs.ci_skip == 'true'
         run: |
           echo "CI_SKIP=true" >> $GITHUB_OUTPUT
 
@@ -104,7 +104,7 @@ jobs:
           echo "${{ vars.UNIT_TEST_ENV }}" > .env
 
       - name: Add skipping flag to e2e tests
-        if: ${{ needs.integration_tests.outputs.ci_skip == 'true' }}
+        if: needs.integration_tests.outputs.ci_skip == 'true'
         run: |
           echo "CI_SKIP=true" >> .env
 
