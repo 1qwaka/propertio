@@ -38,7 +38,6 @@ class BuildingTest extends TestCase
     #[Epic('Integration')]
     public function testCreate(): void
     {
-        $this->fail('Test failing');
         $this->seed([BuildingTypeSeeder::class, DeveloperSeeder::class]);
         $data = BuildingMother::defaultCreateBuildingDto();
         $data->developerId = 1;

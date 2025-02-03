@@ -39,6 +39,11 @@ jobs:
         run: |
           echo "CI_SKIP=true" >> $GITHUB_OUTPUT
 
+      - name: Ensure allure-report exists
+        if: always()
+        run: |
+          mkdir -p allure-results
+
       - name: Save Allure results from unit tests
         if: always()
         uses: actions/upload-artifact@v4
@@ -84,6 +89,11 @@ jobs:
         run: |
           echo "CI_SKIP=true" >> $GITHUB_OUTPUT
 
+      - name: Ensure allure-report exists
+        if: always()
+        run: |
+          mkdir -p allure-results
+
       - name: Save Allure results from integration tests
         if: always()
         uses: actions/upload-artifact@v4
@@ -119,6 +129,11 @@ jobs:
       - name: Run e2e tests
         run: |
           docker-compose -f e2e.docker-compose.yaml up --abort-on-container-exit --build
+
+      - name: Ensure allure-report exists
+        if: always()
+        run: |
+          mkdir -p allure-results
 
       - name: Save Allure results from e2e tests
         if: always()
