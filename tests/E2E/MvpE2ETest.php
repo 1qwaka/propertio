@@ -31,11 +31,6 @@ class MvpE2ETest extends TestCase
     {
         parent::setUp();
 
-        $env = json_encode($_ENV);
-        $isSkip = env('CI_SKIP');
-        echo "12345aaaaaaa $env \n";
-        echo "12345aaaaaaa $isSkip \n";
-
         if (env('CI_SKIP') == 'true') {
             Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
             $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");

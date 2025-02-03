@@ -17,6 +17,7 @@ services:
       DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
+      CI_SKIP: ${CI_SKIP}
     volumes:
       - "./allure-results:/app/allure-results"
   postgres-db:
