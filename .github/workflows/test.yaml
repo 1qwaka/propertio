@@ -135,19 +135,19 @@ jobs:
     if: always()
     steps:
       - name: Download Allure results from unit tests
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: allure-results-unit
           path: combined-results
 
       - name: Download Allure results from integration tests
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: allure-results-integration
           path: combined-results
 
       - name: Download Allure results from e2e tests
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: allure-results-e2e
           path: combined-results
