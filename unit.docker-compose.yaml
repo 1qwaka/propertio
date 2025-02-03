@@ -17,6 +17,8 @@ services:
       DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - "./allure-results:/app/allure-results"
   postgres-db:
     image: postgres:14.8-alpine3.18
     environment:

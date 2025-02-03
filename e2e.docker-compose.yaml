@@ -39,6 +39,8 @@ services:
       APP_E2E_TEST_URL: http://app:8000
     networks:
       tester:
+    volumes:
+      - "./allure-results:/app/allure-results"
   postgres-db:
     image: postgres:14.8-alpine3.18
     environment:

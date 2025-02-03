@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'outputDirectory' => 'build/allure-results',
+    'outputDirectory' => 'allure-results',
 ];
