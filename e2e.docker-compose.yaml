@@ -37,6 +37,7 @@ services:
         condition: service_healthy
     environment:
       APP_E2E_TEST_URL: http://app:8000
+      APP_KEY: ${APP_KEY}
     networks:
       tester:
     volumes:
