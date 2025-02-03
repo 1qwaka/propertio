@@ -21,14 +21,19 @@ class UserTest extends TestCase
 
     protected function setUp(): void
     {
-        if (env('CI_SKIP') == 'true') {
-            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
-            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
-        }
         parent::setUp();
 
         $repository = new UserRepository();
         $this->service = new UserService($repository);
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        if (env('CI_SKIP') == 'true') {
+            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
+            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
+        }
     }
 
     #[Epic('Integration')]

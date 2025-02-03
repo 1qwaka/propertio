@@ -42,10 +42,6 @@ class AdvertisementTest extends TestCase
 
     protected function setUp(): void
     {
-        if (env('CI_SKIP') == 'true') {
-            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
-            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
-        }
         parent::setUp();
 
         $agentRepository = new AgentRepository();
@@ -71,6 +67,14 @@ class AdvertisementTest extends TestCase
         $this->property = Property::factory()->create(['agent_id' => $this->agent->id]);
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        if (env('CI_SKIP') == 'true') {
+            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
+            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
+        }
+    }
     #[Epic('Integration')]
     public function testCreate(): void
     {

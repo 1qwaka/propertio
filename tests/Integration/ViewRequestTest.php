@@ -47,10 +47,6 @@ class ViewRequestTest extends TestCase
 
     protected function setUp(): void
     {
-        if (env('CI_SKIP') == 'true') {
-            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
-            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
-        }
         parent::setUp();
 
         $viewRequestRepository = new ViewRequestRepository();
@@ -81,6 +77,15 @@ class ViewRequestTest extends TestCase
         $this->agent = Agent::factory()->create(['user_id' => $this->user->id]);
         $this->property = Property::factory()->create(['agent_id' => $this->agent->id]);
         Auth::logout();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        if (env('CI_SKIP') == 'true') {
+            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
+            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
+        }
     }
 
     #[Epic('Integration')]

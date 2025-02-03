@@ -31,14 +31,18 @@ class MvpE2ETest extends TestCase
     {
         parent::setUp();
 
+        $this->baseUrl = env('APP_E2E_TEST_URL', 'http://localhost:8000');
+        $this->domain = Str::between($this->baseUrl, '//', ':');
+        $this->uniqueSuffix = time() . rand(1000, 9999);
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
         if (env('CI_SKIP') == 'true') {
             Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
             $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
         }
-
-        $this->baseUrl = env('APP_E2E_TEST_URL', 'http://localhost:8000');
-        $this->domain = Str::between($this->baseUrl, '//', ':');
-        $this->uniqueSuffix = time() . rand(1000, 9999);
     }
 
 
