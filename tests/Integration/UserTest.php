@@ -8,6 +8,7 @@ use App\Services\UserService;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Qameta\Allure\Allure;
 use Qameta\Allure\Attribute\Epic;
 use Tests\TestCase;
 use Tests\Util\UserMother;
@@ -20,6 +21,10 @@ class UserTest extends TestCase
 
     protected function setUp(): void
     {
+        if (env('CI_SKIP') == 'true') {
+            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
+            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
+        }
         parent::setUp();
 
         $repository = new UserRepository();

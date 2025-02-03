@@ -9,6 +9,7 @@ use App\Persistence\Repository\DeveloperRepository;
 use App\Services\DeveloperService;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Qameta\Allure\Allure;
 use Qameta\Allure\Attribute\Epic;
 use Tests\TestCase;
 use Tests\Util\DeveloperMother;
@@ -22,6 +23,10 @@ class DeveloperTest extends TestCase
 
     protected function setUp(): void
     {
+        if (env('CI_SKIP') == 'true') {
+            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
+            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
+        }
         parent::setUp();
 
         $repository = new DeveloperRepository(new Developer);

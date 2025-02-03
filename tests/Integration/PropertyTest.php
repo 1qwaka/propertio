@@ -21,6 +21,7 @@ use Database\Seeders\FloorTypeSeeder;
 use Database\Seeders\PropertySeeder;
 use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Support\Facades\Auth;
+use Qameta\Allure\Allure;
 use Qameta\Allure\Attribute\Epic;
 use Tests\TestCase;
 use Tests\Util\PropertyMother;
@@ -38,6 +39,11 @@ class PropertyTest extends TestCase
 
     protected function setUp(): void
     {
+        if (env('CI_SKIP') == 'true') {
+            Allure::description("Test Skipped due to CI pipeline flag CI_SKIP=true");
+            $this->fail("Skipped due to CI pipeline flag CI_SKIP=true");
+        }
+
         parent::setUp();
 
         $agentRepository = new AgentRepository();
