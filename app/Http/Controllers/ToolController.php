@@ -43,7 +43,7 @@ class ToolController extends Controller
 
     public function testFunction(Request $request)
     {
-        $arr = [ 'prop' => 2, 'domba' => 'sosat' ];
+        $arr = [ 'prop' => 2, 'aboba' => '2232' ];
         $data = (object) $arr;
         return response()->json([
             'data' => $data,

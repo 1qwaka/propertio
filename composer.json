@@ -7,10 +7,12 @@
     "require": {
         "php": "^8.2",
         "allure-framework/allure-phpunit": "^3",
+        "artprima/prometheus-metrics-bundle": "^1.19",
         "html2text/html2text": "*",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
-        "nesbot/carbon": "^3.5"
+        "nesbot/carbon": "^3.5",
+        "predis/predis": "^2.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
