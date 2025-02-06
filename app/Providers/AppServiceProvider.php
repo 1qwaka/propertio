@@ -34,6 +34,7 @@ use App\Services\AdvertisementService;
 use App\Services\AgentService;
 use App\Services\BuildingService;
 use App\Services\DeveloperService;
+use App\Services\PrometheusService;
 use App\Services\PropertyService;
 use App\Services\UserService;
 use App\Services\ViewRequestService;
@@ -47,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton( PrometheusService::class, PrometheusService::class );
     }
 
     /**

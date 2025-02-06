@@ -6,12 +6,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/info', function () {
+    return phpinfo();
+});
+
 Route::get('/tool', 'App\Http\Controllers\ToolController@index')->name('KDTool');
 
 Route::post('/tool/calculate-and-get-density', 'ToolController@CalcDensity');
 
 
 Route::any('/test', [\App\Http\Controllers\ToolController::class, 'testFunction']);
+
+Route::any('/metrics', [\App\Http\Controllers\PrometheusController::class, 'metrics']);
+Route::any('/order', [\App\Http\Controllers\PrometheusController::class, 'createTestOrder']);
 
 
 Route::post('/register', [\App\Http\Controllers\UserController::class, 'register']);

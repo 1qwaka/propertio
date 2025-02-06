@@ -6,17 +6,20 @@ networks:
     driver: bridge
   monitoring:
   redis-net:
+  exporter-net:
+  k6:
 
 volumes:
   redis-data:
+  influxdb-data:
 
 services:
   app:
     deploy:
       resources:
         limits:
-          memory: 1gb
-          cpus: "2"
+          memory: 4gb
+          cpus: "4"
     build:
       context: .
       dockerfile: php-fpm.dockerfile
@@ -31,6 +34,8 @@ services:
     networks:
       - nginx-net
       - redis-net
+      - exporter-net
+      - monitoring
   nginx:
     image: nginx:latest
     ports:
@@ -42,6 +47,15 @@ services:
     networks:
       - nginx-net
       - monitoring
+  exporter:
+    image: hipages/php-fpm_exporter:latest
+    ports:
+      - "9253:9253"
+    environment:
+      PHP_FPM_SCRAPE_URI: "tcp://app:9000/status"
+      PHP_FPM_LOG_LEVEL: "debug"
+    networks:
+      - exporter-net
   prometheus:
     image: prom/prometheus:latest
     volumes:
@@ -53,6 +67,7 @@ services:
       - "9090:9090"
     networks:
       - monitoring
+      - exporter-net
   redis:
     image: redis:latest
     ports:
@@ -76,3 +91,27 @@ services:
     volumes:
       - ./load-data/provisioning-nginx-fpm:/etc/grafana/provisioning
       - ./load-data/dashboards-nginx-fpm:/var/lib/grafana/dashboards
+  influxdb:
+    image: influxdb:1.8
+    networks:
+      - k6
+      - monitoring
+    environment:
+      - INFLUXDB_DB=k6
+      - INFLUXDB_HTTP_BIND_ADDRESS=:8096
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+  k6:
+    image: grafana/k6:latest
+    depends_on:
+      - nginx
+    networks:
+      - k6
+      - nginx-net
+#    ports:
+#      - "6567:6567"
+    environment:
+      - K6_OUT=influxdb=http://influxdb:8096/k6
+    volumes:
+      - ./k6.js:/scripts/k6.js
+    command: run /scripts/k6.js
