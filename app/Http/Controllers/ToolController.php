@@ -51,6 +51,7 @@ class ToolController extends Controller
             Str::random(5) . $request->get('page'),
         ]);
 
+
         return response()->json([
             'data' => '123',
         ]);

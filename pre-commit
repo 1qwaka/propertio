@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo hello
+pwd
+docker-compose -f linter.docker-compose.yaml up
