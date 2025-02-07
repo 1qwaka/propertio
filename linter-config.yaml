@@ -1,0 +1,21 @@
+includes:
+  - "app"
+excludes:
+  - tests
+extensions:
+  - php
+  - inc
+  - php8
+report:
+  html: "/project/linter-report"
+
+
+searches:
+  Class with too complex code:
+    type: class
+    ccn: ">=10"
+    failIfFound: true
+  Too big halstead metric:
+    type: class
+    bugs: ">=1"
+    failIfFound: true

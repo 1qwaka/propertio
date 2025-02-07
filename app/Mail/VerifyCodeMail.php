@@ -16,38 +16,49 @@ class VerifyCodeMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(private string $code)
     {
         //
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Verify Code Mail',
-        );
-    }
 
     /**
-     * Get the message content definition.
+     * Построение письма.
      */
-    public function content(): Content
+    public function build()
     {
-        return new Content(
-            view: 'view.name',
-        );
+        return $this->subject('Ваш код подтверждения')
+            ->view('emails.verify-code')
+            ->with(['code' => $this->code]);
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
+//    /**
+//     * Get the message envelope.
+//     */
+//    public function envelope(): Envelope
+//    {
+//        return new Envelope(
+//            subject: 'Verify Code Mail',
+//        );
+//    }
+//
+//    /**
+//     * Get the message content definition.
+//     */
+//    public function content(): Content
+//    {
+//        return new Content(
+//            view: 'view.name',
+//        );
+//    }
+//
+//    /**
+//     * Get the attachments for the message.
+//     *
+//     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+//     */
+//    public function attachments(): array
+//    {
+//        return [];
+//    }
 }

@@ -1,0 +1,10 @@
+version: "3.9"
+name: laravel-app-linter
+services:
+  linter:
+    build:
+      dockerfile: linter.dockerfile
+      context: .
+    volumes:
+      - "./:/project"
+#    command: ["---report-html=myreport",  "/project/app"]

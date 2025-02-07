@@ -16,6 +16,7 @@ Route::post('/tool/calculate-and-get-density', 'ToolController@CalcDensity');
 
 
 Route::any('/test', [\App\Http\Controllers\ToolController::class, 'testFunction']);
+Route::any('/mail', [\App\Http\Controllers\ToolController::class, 'mail']);
 
 Route::any('/metrics', [\App\Http\Controllers\PrometheusController::class, 'metrics']);
 Route::any('/order', [\App\Http\Controllers\PrometheusController::class, 'createTestOrder']);
@@ -26,6 +27,9 @@ Route::post('/login', [\App\Http\Controllers\UserController::class, 'login']);
 Route::post('/logout', [\App\Http\Controllers\UserController::class, 'logout']);
 Route::middleware(\App\Http\Middleware\MyAuthMiddleware::class)
     ->get('/self', [\App\Http\Controllers\UserController::class, 'self']);
+
+Route::post('/login2', [\App\Http\Controllers\UserController::class, 'login2']);
+Route::post('/confirm', [\App\Http\Controllers\UserController::class, 'confirm']);
 
 
 Route::middleware(\App\Http\Middleware\MyAuthMiddleware::class)

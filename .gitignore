@@ -1,5 +1,6 @@
 /data
 /load-data
+/linter-report
 **/allure-results
 /.phpunit.cache
 /node_modules
