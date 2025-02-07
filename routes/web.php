@@ -37,7 +37,6 @@ Route::middleware(\App\Http\Middleware\MyAuthMiddleware::class)
     ->prefix('agents')->group(function () {
         Route::post('/register', 'register');
         Route::get('/types', 'types');
-//        Route::get('/stats', 'stats');
         Route::get('/self', 'self');
         Route::patch('', 'update');
 
