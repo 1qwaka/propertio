@@ -50,10 +50,13 @@ class ToolController extends Controller
             330,
             Str::random(5) . $request->get('page'),
         ]);
+
         return response()->json([
             'data' => '123',
         ]);
     }
+
+
 
     public function mail()
     {
