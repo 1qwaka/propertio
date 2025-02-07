@@ -74,6 +74,54 @@ class UserController extends Controller
         }
     }
 
+    public function login2(Request $request)
+    {
+        $credentials = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);
+
+        if ($credentials->fails()) {
+            return response()->json(['message' => 'Login failed', 'errors' => $credentials->errors()], 401);
+        }
+
+
+        $data = new LoginUserDto(...$credentials->safe()->only(['email', 'password']));
+
+        try {
+            $this->userService->login2($data);
+            return response()->json(['message' => 'Credentials valid, check your email for auth code']);
+        } catch (WithErrorCodeException $e) {
+            return response()->json(['message' => 'Login failed'], 401);
+        }
+    }
+    public function confirm(Request $request): JsonResponse
+    {
+        $credentials = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+            'code' => 'required|string',
+        ]);
+
+        if ($credentials->fails()) {
+            return response()->json(['message' => 'Confirm failed', 'errors' => $credentials->errors()], 401);
+        }
+
+        $data = new LoginUserDto(...$credentials->safe()->only(['email', 'password']));
+
+        try {
+            $user = $this->userService->confirm(
+                $data,
+                $credentials->getValue('code')
+            );
+            return response()->json(['message' => 'Login successful', 'user' => UserView::toArray($user)]);
+        } catch (WithErrorCodeException $e) {
+            return response()->json(['message' => 'Login failed'], 401);
+        }
+    }
+
+
+
     public function logout(Request $request): JsonResponse
     {
         try {

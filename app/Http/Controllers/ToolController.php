@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\Property\LivingSpaceType;
 use App\Domain\Property\UpdatePropertyDto;
 use App\Exceptions\WithErrorCodeException;
+use App\Mail\VerifyCodeMail;
 use App\Models\Agent;
 use App\Models\City;
 use App\Models\User;
@@ -16,7 +17,9 @@ use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ToolController extends Controller
 {
@@ -43,12 +46,20 @@ class ToolController extends Controller
 
     public function testFunction(Request $request)
     {
-        $arr = [ 'prop' => 2, 'aboba' => '2232' ];
-        $data = (object) $arr;
+        DB::insert("insert into auth_codes (user_id, code) values (?, ?)", [
+            330,
+            Str::random(5) . $request->get('page'),
+        ]);
         return response()->json([
-            'data' => $data,
-            'prop' => $data->prop,
-            'type' => gettype($data),
+            'data' => '123',
+        ]);
+    }
+
+    public function mail()
+    {
+        Mail::to('test@example.com')->send(new VerifyCodeMail('123DOASOAA'));
+        return response()->json([
+            'message' => 'success',
         ]);
     }
 }

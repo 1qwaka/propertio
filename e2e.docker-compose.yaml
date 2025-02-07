@@ -1,5 +1,9 @@
 version: "3.9"
 name: laravel-app-e2e-test
+
+volumes:
+  logs-data:
+
 services:
   app:
     build:
@@ -26,6 +30,8 @@ services:
       timeout: 5s
       retries: 10
       start_period: 10s
+    volumes:
+      - "logs-data:/app/storage/logs/"
   app-e2e-tester:
     build:
       context: .
@@ -37,11 +43,13 @@ services:
         condition: service_healthy
     environment:
       APP_E2E_TEST_URL: http://app:8000
+      APP_E2E_TEST_LOG_PATH: /app/storage/logs/laravel.log
       CI_SKIP: ${CI_SKIP}
     networks:
       tester:
     volumes:
       - "./allure-results:/app/allure-results"
+      - "logs-data:/app/storage/logs/"
   postgres-db:
     image: postgres:14.8-alpine3.18
     environment:

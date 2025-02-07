@@ -53,11 +53,19 @@ return new class extends Migration
             ip_address    varchar(45),
             user_agent    text,
             payload       text         not null,
-            last_activity integer      not null,
-            auth_code     varchar(20)
+            last_activity integer      not null
         );
     ");
 
+    DB::statement("
+        create table auth_codes
+        (
+            id            bigserial primary key,
+            user_id       bigint,
+            email         varchar(100)        unique,
+            code          varchar(20)
+        );
+    ");
     }
 
     /**
@@ -67,5 +75,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('users');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('auth_codes');
     }
 };
