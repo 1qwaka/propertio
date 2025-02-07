@@ -7,7 +7,8 @@ RUN apt update && apt install -y \
     libzip-dev \
     unzip \
     libpq-dev \
-    wget
+    wget \
+    libbrotli-dev
 
 COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -15,6 +16,13 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN docker-php-ext-install pdo pdo_pgsql
 RUN pecl install redis-5.3.7 \
 	&& docker-php-ext-enable redis
+RUN pecl install swoole \
+	&& docker-php-ext-enable swoole
+
+RUN docker-php-ext-configure pcntl --enable-pcntl \
+  && docker-php-ext-install \
+    pcntl
+
 
 RUN composer install --no-dev --optimize-autoloader
 
@@ -29,8 +37,8 @@ RUN chmod -R 775 /var/www/bootstrap/cache
 RUN chown www-data:www-data /var/www/database/database.sqlite
 RUN chmod 777 /var/www/database/database.sqlite
 
-RUN chown www-data:www-data /var/www/start_php_fpm.sh
-RUN chmod 777 /var/www/start_php_fpm.sh
+RUN chown www-data:www-data /var/www/start_octane_swoole.sh
+RUN chmod 777 /var/www/start_octane_swoole.sh
 
 
 RUN wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz \
@@ -38,7 +46,7 @@ RUN wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/no
     && mv node_exporter-1.8.2.linux-amd64/node_exporter /usr/local/bin/ \
     && rm -rf node_exporter-1.8.2.linux-amd64
 
-CMD cd /var/www && ./start_php_fpm.sh
+CMD cd /var/www && ./start_octane_swoole.sh
 #RUN echo '' > .env
 #RUN php artisan key:generate
 # this command breaks app somehow

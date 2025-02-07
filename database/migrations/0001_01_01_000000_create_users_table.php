@@ -53,7 +53,8 @@ return new class extends Migration
             ip_address    varchar(45),
             user_agent    text,
             payload       text         not null,
-            last_activity integer      not null
+            last_activity integer      not null,
+            auth_code     varchar(20)
         );
     ");
 
