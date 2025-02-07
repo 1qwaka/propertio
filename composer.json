@@ -12,6 +12,9 @@
         "laravel/octane": "^2.6",
         "laravel/tinker": "^2.9",
         "nesbot/carbon": "^3.5",
+        "open-telemetry/exporter-otlp": "^1.2",
+        "open-telemetry/opentelemetry-auto-laravel": "^1.0",
+        "open-telemetry/sdk": "^1.2",
         "predis/predis": "^2.3",
         "promphp/prometheus_client_php": "^2.13"
     },
@@ -64,7 +67,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "tbachert/spi": true
         },
         "platform": {
             "ext-pcntl": "8.3",
