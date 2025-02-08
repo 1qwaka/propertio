@@ -165,7 +165,7 @@ jobs:
 
       - name: Run e2e tests
         run: |
-          bash -i docker-compose -f e2e.docker-compose.yaml up --abort-on-container-exit --build
+          docker-compose -f e2e.docker-compose.yaml up --abort-on-container-exit --build
 
       - name: Ensure allure-report exists
         if: always()
