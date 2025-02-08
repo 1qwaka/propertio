@@ -7,7 +7,7 @@ volumes:
 networks:
   database:
   tester:
-  jaeger:
+  jaeger-net:
 
 services:
   app:
@@ -30,11 +30,11 @@ services:
       OTEL_SERVICE_NAME: my-laravel-app
       OTEL_TRACES_EXPORTER: otlp
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://collector:4318
     networks:
       database:
       tester:
-      jaeger:
+      jaeger-net:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/up"]
       interval: 5s
@@ -82,13 +82,13 @@ services:
     ports:
       - "16686:16686"
     networks:
-      - jaeger
-#  collector:
-#    image: otel/opentelemetry-collector
-##    ports:
-##      - "4318:4318"
-#    volumes:
-#      - "./otel-collector-config.yaml:/etc/otelcol/config.yaml"
-#      - "./otel-traces.json:/var/logs/otel-traces.json"
-#    networks:
-#      - jaeger
+      - jaeger-net
+  collector:
+    image: otel/opentelemetry-collector
+#    ports:
+#      - "4318:4318"
+    volumes:
+      - "./otel-collector-config.yaml:/etc/otelcol/config.yaml"
+      - "./otel-traces.json:/var/logs/otel-traces.json"
+    networks:
+      - jaeger-net

@@ -64,3 +64,29 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+### 1
+- https://laravel.com/docs/11.x/testing
+- https://github.com/OmgProsto/santa-clean
+- https://habr.com/ru/articles/269589/
+
+### 2
+- https://hub.docker.com/_/php
+
+### 3
+- https://stackoverflow.com/questions/24797539/how-does-php-works-and-what-is-its-architecture
+- https://www.reddit.com/r/webdev/comments/ulvk8/can_anyone_explain_like_i_am_5_what_is_fastcgi/
+- https://www.reddit.com/r/PHPhelp/comments/16rmdai/how_does_asyncawait_work_in_laravel/
+- https://www.litespeedtech.com/open-source/litespeed-sapi/php
+- https://habr.com/ru/companies/intervolga/articles/869610/
+- https://habr.com/ru/articles/588785/
+- https://prometheus.io/docs/prometheus/latest/getting_started/
+- https://github.com/the-benchmarker/website?tab=readme-ov-file
+- https://frankenphp.dev/docs/
+- https://laravel.com/docs/11.x/deployment
+
+### 6
+- https://github.com/phpmetrics/PhpMetrics
+  - https://phpmetrics.github.io/website/getting-started/
+- 

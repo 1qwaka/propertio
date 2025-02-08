@@ -4,12 +4,10 @@ receivers:
       grpc:
       http:
         endpoint: ":4318"
-        cors:
-          allowed_origins:
 
 exporters:
   otlp:
-    endpoint: "http://jaeger:14268/api/traces"
+    endpoint: "jaeger:4317"
     tls:
       insecure: true
   file:
@@ -21,6 +19,3 @@ service:
       receivers: [otlp]
       processors: []
       exporters: [otlp, file]
-    metrics:
-      receivers: [otlp]
-      exporters: [otlp]
