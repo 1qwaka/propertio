@@ -177,12 +177,12 @@ jobs:
           name: allure-results-e2e
           path: allure-results
 
-      - name: Save Telemetry results from e2e tests
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: traces-e2e
-          path: otel-traces.json
+#      - name: Save Telemetry results from e2e tests
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: traces-e2e
+#          path: otel-traces.json
 
 
   combine_allure_results:
