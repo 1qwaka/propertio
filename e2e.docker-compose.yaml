@@ -87,6 +87,6 @@ services:
     #      - "4318:4318"
     volumes:
       - "./otel-collector-config.yaml:/etc/otelcol/config.yaml"
-      - "./otel-traces.json:/var/logs/otel-traces.json"
+      - "./otel-traces.json:/otelcol/otel-traces.json"
     networks:
       - jaeger-net
