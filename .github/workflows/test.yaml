@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - master
+      - check-actions
   pull_request:
     branches:
       - master
+      - check-actions
 
 jobs:
   linters:
