@@ -12,6 +12,9 @@ COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN docker-php-ext-install pdo pdo_pgsql
+RUN pecl install opentelemetry \
+	&& docker-php-ext-enable opentelemetry
+
 RUN composer install
 
 CMD php artisan migrate:refresh --force && \

@@ -8,6 +8,9 @@ RUN apt update && apt install -y \
     unzip \
     libpq-dev
 
+RUN pecl install opentelemetry \
+	&& docker-php-ext-enable opentelemetry
+
 COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

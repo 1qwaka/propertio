@@ -1,6 +1,7 @@
 /data
 /load-data
 /linter-report
+*otel-traces.json
 **/allure-results
 /.phpunit.cache
 /node_modules

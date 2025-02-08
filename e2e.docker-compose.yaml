@@ -4,6 +4,11 @@ name: laravel-app-e2e-test
 volumes:
   logs-data:
 
+networks:
+  database:
+  tester:
+  jaeger:
+
 services:
   app:
     build:
@@ -21,9 +26,15 @@ services:
       DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
+      OTEL_PHP_AUTOLOAD_ENABLED: true
+      OTEL_SERVICE_NAME: my-laravel-app
+      OTEL_TRACES_EXPORTER: otlp
+      OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
     networks:
       database:
       tester:
+      jaeger:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/up"]
       interval: 5s
@@ -64,6 +75,20 @@ services:
       start_period: 3s
     networks:
       database:
-networks:
-  database:
-  tester:
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "16686:16686"
+    networks:
+      - jaeger
+#  collector:
+#    image: otel/opentelemetry-collector
+##    ports:
+##      - "4318:4318"
+#    volumes:
+#      - "./otel-collector-config.yaml:/etc/otelcol/config.yaml"
+#      - "./otel-traces.json:/var/logs/otel-traces.json"
+#    networks:
+#      - jaeger

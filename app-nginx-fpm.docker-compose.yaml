@@ -103,6 +103,11 @@ services:
       - influxdb-data:/var/lib/influxdb
   k6:
     image: grafana/k6:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2gb
+          cpus: "2"
     depends_on:
       - nginx
     networks:

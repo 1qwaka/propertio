@@ -1,6 +1,9 @@
 version: "3.9"
 name: laravel-app-jaeger
 
+networks:
+  jaeger:
+
 services:
   jaeger:
     image: jaegertracing/all-in-one:latest
@@ -8,5 +11,14 @@ services:
       - COLLECTOR_OTLP_ENABLED=true
     ports:
       - "16686:16686"
-      - "4317:4317"
+    networks:
+      - jaeger
+  collector:
+    image: otel/opentelemetry-collector
+    ports:
       - "4318:4318"
+    volumes:
+      -  "./otel-collector-config.yaml:/etc/otelcol/config.yaml"
+      -  "./otel-traces.json:/var/logs/otel-traces.json"
+    networks:
+      - jaeger
