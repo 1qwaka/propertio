@@ -11,7 +11,7 @@ exporters:
     tls:
       insecure: true
   file:
-    path: "/otelcol/otel-traces.json"
+    path: "/traces/otel-traces.json"
 
 service:
   pipelines:

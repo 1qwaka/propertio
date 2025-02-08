@@ -163,11 +163,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Ensure otel-traces.json exists and it is a file
-        if: always()
-        run: |
-          touch otel-traces.json
-
       - name: Run e2e tests
         run: |
           bash -i docker-compose -f e2e.docker-compose.yaml up --abort-on-container-exit --build
@@ -189,7 +184,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: traces-e2e
-          path: otel-traces.json
+          path: traces
+
   combine_allure_results:
     permissions:
       contents: write
