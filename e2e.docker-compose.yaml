@@ -48,8 +48,6 @@ services:
       context: .
       dockerfile: app-e2e-tester.dockerfile
     depends_on:
-      postgres-db:
-        condition: service_healthy
       app:
         condition: service_healthy
     environment:
