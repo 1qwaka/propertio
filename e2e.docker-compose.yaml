@@ -82,7 +82,10 @@ services:
     networks:
       - jaeger-net
   collector:
-    image: otel/opentelemetry-collector
+    build:
+      context: .
+      dockerfile: collector.dockerfile
+#    image: otel/opentelemetry-collector
     #    ports:
     #      - "4318:4318"
     volumes:
