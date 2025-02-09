@@ -116,6 +116,11 @@ jobs:
         run: |
           echo "CI_SKIP=true" >> .env
 
+      - name: Ensure traces dir exists
+        if: always()
+        run: |
+          mkdir -p traces
+
       - name: Run integration tests
         run: |
           docker-compose -f integration.docker-compose.yaml up --abort-on-container-exit --build
