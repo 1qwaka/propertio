@@ -1,18 +1,30 @@
-# Stage 1: Use a full-featured image to create and set permissions
-FROM alpine as builder
+# Use Alpine Linux as the base image
+FROM alpine:latest
 
-# Create the /traces directory and set permissions
-RUN mkdir -p /traces && chmod -R 777 /traces
+# Set environment variables
+ENV OTELCOL_VERSION=0.118.0
+ENV OTELCOL_BINARY=otelcol_${OTELCOL_VERSION}_linux_amd64.tar.gz
+ENV OTELCOL_URL=https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${OTELCOL_VERSION}/${OTELCOL_BINARY}
 
-# Stage 2: Use the minimal otel/opentelemetry-collector image
-FROM otel/opentelemetry-collector
+# Install dependencies
+RUN apk update && \
+    apk add --no-cache curl tar
+#    rm -rf /var/cache/apk/*
 
-# Copy the /traces directory from the builder stage
-COPY --from=builder /traces /traces
+# Download and install otelcol
+RUN curl --proto '=https' --tlsv1.2 -fOL ${OTELCOL_URL} && \
+    tar -xvf ${OTELCOL_BINARY} && ls -la && \
+    chown root /otelcol && chmod 777 /otelcol && \
+    ls -la
+#    mv otelcol_linux_amd64 /usr/local/bin/otelcol && \
+#    chmod +x /usr/local/bin/otelcol && \
+#    rm -rf ${OTELCOL_BINARY}
 
-# Switch to root if needed to verify permissions
-#USER root
-#RUN ls -ld /traces
+# Create a directory for traces (optional)
+# RUN mkdir -p /traces && chmod -R 777 /traces
 
-# Switch back to the non-root user (if required)
-#USER otel
+# Set the entrypoint to run otelcol
+ENTRYPOINT ["/otelcol"]
+
+# Default arguments for otelcol (you can override these when running the container)
+CMD ["--config=/etc/otelcol/config.yaml"]
